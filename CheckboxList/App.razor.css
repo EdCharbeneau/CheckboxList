@@ -1,0 +1,56 @@
+﻿/* input is in the child, so use ::deep */
+::deep input.b-checkbox-item__input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+::deep .b-checkboxes {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.checkbox-list-item {
+    position: realtive;
+    background-color: lightblue;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative; /* If you want text inside of it */
+    width: 100%;
+}
+
+.checkbox-list-item__name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+}
+
+/*::deep input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item {
+    background-color: green;
+}*/
+
+    ::deep input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item .checkbox-list-item__tickmark {
+        border-color: #000 transparent transparent #000 ;
+    }
+    ::deep input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item .checkbox-list-item__tickmark:before {
+        color:white;
+        position:absolute;
+        top:-20px;
+        left:-20px;
+        content:"✔"
+    }
+
+.checkbox-list-item__tickmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 30px solid;
+    border-color: transparent;
+}

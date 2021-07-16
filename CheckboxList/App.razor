@@ -1,0 +1,37 @@
+﻿@using CheckboxList.Component
+
+<div class="root">
+    <Checkboxes Items="Data" Context="foo" @bind-SelectedItems="SelectedItems">
+        <ItemTemplate>
+            <div class="checkbox-list-item">
+                <div class="checkbox-list-item__tickmark"></div>
+                <div class="checkbox-list-item__name">
+                    @foo.Id
+                </div>
+            </div>
+        </ItemTemplate>
+    </Checkboxes>
+</div>
+<hr />
+
+<h3>Selected Items:</h3>
+<ul>
+    @foreach (Foo selected in SelectedItems)
+    {
+        <li>@selected.Id, @selected.Name @selected.Value</li>
+    }
+</ul>
+
+@code {
+    public record Foo(string Name, string Value, int Id);
+
+    List<Foo> Data = new()
+    {
+        new("alpha", "red", 0),
+        new("beta", "green", 1),
+        new("gamma", "blue", 2),
+        new("delta", "yello", 3),
+    };
+
+    List<Foo> SelectedItems = new();
+}
