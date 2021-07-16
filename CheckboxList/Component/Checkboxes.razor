@@ -1,19 +1,45 @@
 ﻿@typeparam TItem
 
-<div class="b-checkboxes">
+<div class="b-checkboxes" @attributes="AdditionalAttributes">
+
     @foreach (var item in Items)
     {
         var id = Guid.NewGuid();
         <div class="b-checkbox-item">
-            <input id="@id" type="checkbox" class="b-checkbox-item__input" @onchange="_ => HandleChange(item)" />
-            <label for="@id" class="b-checkbox-item__label">
-                @ItemTemplate(item)
+            <input id="@id" type="checkbox" class="b-checkbox-item__input @InputCss" @onchange="_ => HandleChange(item)" />
+            <label for="@id" class="b-checkbox-item__label @LabelCss">
+                @if (ItemTemplate is null)
+                {
+                    GetValue(item);
+                }
+                else
+                {
+                    @ItemTemplate(item)
+                }
             </label>
         </div>
     }
 </div>
 
 @code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    [Parameter]
+    public string TextField { get; set; }
+
+    [Parameter]
+    public string LabelCss { get; set; }
+
+    [Parameter]
+    public string InputCss { get; set; }
+
+
+    private object GetValue(TItem item)
+    {
+        return item.GetType().GetProperty(TextField).GetValue(item, null);
+    }
 
     [Parameter]
     public IEnumerable<TItem> Items { get; set; }

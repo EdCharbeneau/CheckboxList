@@ -1,17 +1,17 @@
 ﻿@using CheckboxList.Component
 
-<div class="root">
-    <Checkboxes Items="Data" Context="foo" @bind-SelectedItems="SelectedItems">
-        <ItemTemplate>
-            <div class="checkbox-list-item">
-                <div class="checkbox-list-item__tickmark"></div>
-                <div class="checkbox-list-item__name">
-                    @foo.Id
-                </div>
+<Checkboxes Items="Data" Context="foo" TextField="@nameof(Foo.Name)" @bind-SelectedItems="SelectedItems"
+style="@($"--item-color: {Color}")">
+    <ItemTemplate>
+        <div class="checkbox-list-item">
+            <div class="checkbox-list-item__tickmark"></div>
+            <div class="checkbox-list-item__name">
+                @foo.Name
             </div>
-        </ItemTemplate>
-    </Checkboxes>
-</div>
+        </div>
+    </ItemTemplate>
+</Checkboxes>
+
 <hr />
 
 <h3>Selected Items:</h3>
@@ -22,7 +22,11 @@
     }
 </ul>
 
+<input type="color" @bind-value="@Color" @bind-value:event="oninput" />
+
 @code {
+    string Color { get; set; } = "#fff";
+
     public record Foo(string Name, string Value, int Id);
 
     List<Foo> Data = new()
@@ -31,6 +35,14 @@
         new("beta", "green", 1),
         new("gamma", "blue", 2),
         new("delta", "yello", 3),
+        new("aa", "red", 4),
+        new("bb", "green", 5),
+        new("cc", "blue", 6),
+        new("ddd", "yello", 7),
+        new("ee", "red", 8),
+        new("ff", "green", 9),
+        new("gg", "blue", 10),
+        new("hhh", "yello", 11),
     };
 
     List<Foo> SelectedItems = new();

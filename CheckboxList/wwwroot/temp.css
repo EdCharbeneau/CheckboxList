@@ -1,4 +1,11 @@
-﻿input.b-checkbox-item__input {
+﻿:root {
+    --item-color: #ff6a00;
+    --item-text-color: white;
+    --selection-color: #1192dd;
+    --hover-color: #3fb8ff;
+}
+
+input.b-checkbox-item__input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -9,16 +16,28 @@
 .b-checkboxes {
     display: grid;
     gap: 1rem;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width:768px) {
+    .b-checkboxes {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
 
 .checkbox-list-item {
     position: realtive;
-    background-color: lightblue;
-    padding-top: 100%; /* 1:1 Aspect Ratio */
+    background-color: var(--item-color);
+    padding-top: 50%; /* 1:1 Aspect Ratio */
     position: relative; /* If you want text inside of it */
     width: 100%;
+    border: 2px solid var(--hover-color);
+    cursor: pointer;
 }
+
+    .checkbox-list-item:hover {
+        border: 2px solid var(--selection-color);
+    }
 
 .checkbox-list-item__name {
     position: absolute;
@@ -29,15 +48,16 @@
     display: grid;
     align-content: center;
     justify-content: center;
+    color: var(--item-text-color);
 }
 
-/*::deep input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item {
-    background-color: green;
-}*/
-
-input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item .checkbox-list-item__tickmark {
-    border-color: #000 transparent transparent #000;
+input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item {
+    border-color: var(--selection-color);
 }
+
+    input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item .checkbox-list-item__tickmark {
+        border-color: var(--selection-color) transparent transparent var(--selection-color);
+    }
 
     input.b-checkbox-item__input:checked ~ .b-checkbox-item__label .checkbox-list-item .checkbox-list-item__tickmark:before {
         color: white;
