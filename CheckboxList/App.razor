@@ -1,7 +1,11 @@
 ﻿@using CheckboxList.Component
 
-<Checkboxes Items="Data" Context="foo" TextField="@nameof(Foo.Name)" @bind-SelectedItems="SelectedItems"
-style="@($"--item-color: {Color}")">
+<input type="color" @bind-value="@Color" @bind-value:event="oninput" />
+<label for="noOfColumns">No of columns: </label><input id="noOfColumns" type="range" min="1" max="10" @bind-value="@NoOfColumns" @bind-value:event="oninput" />
+<hr />
+
+<Checkboxes Items="Data" Context="foo" TextField="@nameof(Foo.Name)" NoOfColumns="@NoOfColumns" @bind-SelectedItems="SelectedItems"
+            style="@($"--item-color: {Color}")">
     <ItemTemplate>
         <div class="checkbox-list-item">
             <div class="checkbox-list-item__tickmark"></div>
@@ -21,11 +25,9 @@ style="@($"--item-color: {Color}")">
         <li>@selected.Id, @selected.Name @selected.Value</li>
     }
 </ul>
-
-<input type="color" @bind-value="@Color" @bind-value:event="oninput" />
-
 @code {
-    string Color { get; set; } = "#fff";
+    string Color { get; set; } = "#333";
+    int NoOfColumns { get; set; } = 4;
 
     public record Foo(string Name, string Value, int Id);
 
@@ -34,15 +36,15 @@ style="@($"--item-color: {Color}")">
         new("alpha", "red", 0),
         new("beta", "green", 1),
         new("gamma", "blue", 2),
-        new("delta", "yello", 3),
+        new("delta", "yellow", 3),
         new("aa", "red", 4),
         new("bb", "green", 5),
         new("cc", "blue", 6),
-        new("ddd", "yello", 7),
+        new("ddd", "yellow", 7),
         new("ee", "red", 8),
         new("ff", "green", 9),
         new("gg", "blue", 10),
-        new("hhh", "yello", 11),
+        new("hhh", "yellow", 11),
     };
 
     List<Foo> SelectedItems = new();

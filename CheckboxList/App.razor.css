@@ -1,0 +1,54 @@
+﻿
+.checkbox-list-item {
+    position: relative;
+    background-color: var(--item-color);
+    padding-top: 50%; /* 1:1 Aspect Ratio */
+    position: relative; /* If you want text inside of it */
+    width: 100%;
+    border: 2px solid var(--hover-color);
+    cursor: pointer;
+}
+
+    .checkbox-list-item:hover {
+        border: 2px solid var(--selection-color);
+    }
+
+.checkbox-list-item__name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    color: var(--item-text-color);
+}
+
+input:checked ~ * .checkbox-list-item {
+    border-color: var(--selection-color);
+}
+
+    input:checked ~ * .checkbox-list-item .checkbox-list-item__tickmark {
+        border-color: var(--selection-color) transparent transparent var(--selection-color);
+    }
+
+    input:checked ~ * .checkbox-list-item .checkbox-list-item__tickmark:before {
+        color: white;
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        content: "✔"
+    }
+
+.checkbox-list-item__tickmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 30px solid;
+    border-color: transparent;
+}
+
+input[type=range] {
+    width: 40%;
+}
