@@ -1,13 +1,13 @@
 ﻿@typeparam TItem
 
-<div class="b-checkboxes" @attributes="AdditionalAttributes">
+<div id="checkboxes" @attributes="AdditionalAttributes">
 
     @foreach (var item in Items)
     {
         var id = Guid.NewGuid();
-        <div class="b-checkbox-item">
-            <input id="@id" type="checkbox" class="b-checkbox-item__input @InputCss" @onchange="_ => HandleChange(item)" />
-            <label for="@id" class="b-checkbox-item__label @LabelCss">
+        <div>
+            <input id="@id" type="checkbox" class="@InputCss" @onchange="_ => HandleChange(item)" />
+            <label for="@id" class="@LabelCss">
                 @if (ItemTemplate is null)
                 {
                     GetValue(item);
@@ -19,7 +19,23 @@
             </label>
         </div>
     }
+
+    <style>
+    #checkboxes {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @@media (min-width:768px) {
+    #checkboxes {
+        grid-template-columns: @GridColumns;
+    }
+}
+    </style>
+
 </div>
+
 
 @code {
 
@@ -35,6 +51,11 @@
     [Parameter]
     public string InputCss { get; set; }
 
+    [Parameter]
+    public int NoOfColumns { get; set; } = 4;
+
+
+    private string GridColumns => String.Concat(Enumerable.Repeat("1fr ", NoOfColumns));
 
     private object GetValue(TItem item)
     {
