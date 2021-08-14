@@ -1,0 +1,76 @@
+﻿@typeparam TItem
+
+<div class="checkboxes" @attributes="AdditionalAttributes" style="@InlineStyle">
+
+    @foreach (var item in Items)
+    {
+        var id = Guid.NewGuid();
+        <div>
+            <input id="@id" type="checkbox" @onchange="_ => HandleChange(item)" />
+            <label for="@id">
+                <div class="checkbox-list-item">
+                    <div class="checkbox-list-item__tickmark"></div>
+                    <div class="checkbox-list-item__name">
+                        @if (ItemTemplate is null)
+                        {
+                            <span>@GetValue(item)</span>
+                        }
+                        else
+                        {
+                            @ItemTemplate(item)
+                        }
+                    </div>
+                </div>
+            </label>
+        </div>
+    }
+
+</div>
+
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, Object>();
+
+    private string InlineStyle => StyleBuilder.Empty()
+        .AddStyle("--checkboxgrid-columns", GetColumnValues(Columns), () => Columns > 0)
+        .AddStyleFromAttributes(AdditionalAttributes)
+        .NullIfEmpty();
+
+    [Parameter]
+    public string TextField { get; set; }
+
+    [Parameter]
+    public int Columns { get; set; }
+
+    private string GetColumnValues(int columns) => String.Concat(Enumerable.Repeat("1fr ", columns));
+
+    private object GetValue(TItem item) => item.GetType().GetProperty(TextField).GetValue(item, null);
+
+    [Parameter]
+    public IEnumerable<TItem> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> ItemTemplate { get; set; }
+
+    [Parameter]
+    public List<TItem> SelectedItems { get; set; }
+
+    [Parameter]
+    public EventCallback<List<TItem>> SelectedItemsChanged { get; set; }
+
+    void HandleChange(TItem item)
+    {
+        if (SelectedItems.Contains(item))
+        {
+            SelectedItems.Remove(item);
+        }
+        else
+        {
+            SelectedItems.Add(item);
+        }
+        SelectedItemsChanged.InvokeAsync(SelectedItems);
+    }
+
+}

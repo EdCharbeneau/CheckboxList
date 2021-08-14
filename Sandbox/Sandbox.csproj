@@ -10,4 +10,8 @@
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0-preview.6.21352.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CheckboxComponents\CheckboxComponents.csproj" />
+  </ItemGroup>
+
 </Project>
